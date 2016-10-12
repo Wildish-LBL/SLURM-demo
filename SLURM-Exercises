@@ -1,0 +1,136 @@
+% cd $SCRATCH
+
+The hands on will be on Edison since Cori is down for upgrade.
+Please notice that Edison has 24 cores per node (12 cores per socket), and 2 hyperthreads per node.
+And CoriP1 has 32 cores per node (16 cores per socket), and 2 hyperthreads per node.
+
+===============================
+
+To use reservation nodes:
+
+On Thursday 2:30 - 4:30pm
+#SBATCH --reservation=jgitrain
+#SBATCH -p debug
+
+or %salloc -N 1 -p debug --reservation jgitrain -t 30:00
+
+On Wednesday 1-4:30pm, from trainxx accounts only
+#SBATCH --reservation=jgitrain
+#SBATCH -p debug
+#SBATCH -N 1
+#SBATCH -t 30:00
+
+or %salloc -N 1 -p debug --reservation jgitrain -t 30:00
+
+Outside of the above reservation window from trainxx accounts or from your own NERSC accounts
+#SBATCH -p debug
+#SBATCH -N 1
+#SBATCH -t 30:00
+
+or %salloc -N 1 -p debug -t 30:00
+
+======================================================
+
+Exercise 1:
+
+Get on a compute node, find out details about the compute node.
+
+% salloc -N 1 -p regular --reservation jgitrain -t 30:00
+or:
+% salloc -N 1 -p debug -t 30:00
+% cat /proc/cpuinfo
+% hwloc-ls
+%
+% # Examine the execution environment, then quit
+% env | grep SLURM | sort
+% exit
+
+============================
+
+Exercise 2:
+
+Use "#SBATCH -n" (without #SBATCH -N) to see how many compute nodes you will get
+% salloc -n 48 -p ...
+% echo $SLURM_NODELIST
+Each Edison node has 24 cores, are you getting 2 nodes here?
+(notice with hyperthreading on by default, there are 48 logical cores, so you get 1 node only)
+% exit
+
+========================================
+
+Exercise 3:
+
+Run a hybrid MPI/OpenMP code compiled with OpenMP enabled flag, and run in pure MPI mode.
+Check Intel environment and Cray environment
+% salloc -N 1 ...
+% cc -openmp -o xthi.intel xthi.c
+% srun -n 2 ./xthi.intel
+%
+% module swap PrgEnv-intel PrgEnv-cray
+% cc -o xthi.cray xthi.c
+%
+% srun -n 2 ./xthi.intel
+Hello from rank 1, thread 1, on nid00247. (core affinity = 12,36)
+Hello from rank 1, thread 0, on nid00247. (core affinity = 12,36)
+Hello from rank 0, thread 0, on nid00247. (core affinity = 0,24)
+Hello from rank 0, thread 1, on nid00247. (core affinity = 0,24)
+%
+% srun -n 2 ./xthi.cray
+Hello from rank 0, thread 0, on nid00247. (core affinity = 0,24)
+Hello from rank 1, thread 0, on nid00247. (core affinity = 12,36)
+%
+% setenv OMP_NUM_THREADS 1
+% srun -n 2 ./xthi.intel
+Hello from rank 0, thread 0, on nid00247. (core affinity = 0,24)
+Hello from rank 1, thread 0, on nid00247. (core affinity = 12,36)
+% exit
+set OMP_NUM_THREADS to 1 is needed for Intel environment to run in pure MPI mode. Since default number of threads for Intel compiler is max availale, while it is 1 for Cray compiler. 
+
+===========================================================
+
+Exercise 4:
+
+Check how -N, -n, -c, and OMP_NUM_THREADS are used for running hybrid MPI/OpenMP code for optimal process and thread affinity.
+
+% salloc -N 1 ...
+% setenv OMP_NUM_THREADS 6
+% srun -n 4 -c 6 ./xthi.intel |sort -k4n,6n
+% srun -n 4 ./xthi.intel
+% srun -n 4 -c 3 ./xthi.intel
+
+Also set MPI_tasks*OMP_threads >=24, check how hyperthreading is used
+% srun -n 8 -c 6 ./xthi.intel |sort -k4n,6n
+
+% setenv OMP_NUM_THREADS 3
+
+Check how KMP_AFFINITY, OMP_PLACES affects affinity
+
+use KMP_AFFINITY and OMP_PLACES settings
+% setenv KMP_AFFINITY compact
+do the above sruns again
+
+% setenv KMP_AFFINITY scatter
+do the above sruns again
+
+% unsetenv KMP_AFFINITY
+
+% setenv OMP_PLACES cores
+do the above sruns again
+
+% setenv OMP_PLACES threads
+do the above sruns again
+
+% setenv OMP_PLACES sockets
+do the above sruns again
+
+
+Also do some tests with not fully using all cores on the node
+% setenv OMP_NUM_THREADS 3
+% srun -n 4 -c 6 ./xthi.intel |sort -k4n,6n
+...
+
+==========================
+
+Exercise 5 
+Try everything above with 2 nodes, and run with double the MPI tasks or threads.
+% salloc -N 2 -p debug -t 30:00

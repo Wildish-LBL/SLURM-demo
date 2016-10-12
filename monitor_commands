@@ -1,0 +1,31 @@
+Sample commands.  See man page or "<commands> --help" for more options.
+
+% sqs          (show user's own jobs)
+% sqs -a       (shows all jobs)
+% sqs -a -p debug     (shows only debug jobs)
+% sqs -a -nr -np shared   (no running jobs, no shared jobs)
+% sqs -w       (shows all my jobs in wide format with more info)
+% sqs -s       (short summary of queued jobs)
+
+
+% squeue -u <username>
+% squeue -j <jobid> --start
+% squeue -o "%.18i %.3t %.10r %.10u %.12j %.8D %.10M %.10l %.20V %.12P %.20S %.15Q"
+JOBID  ST     REASON       USER         NAME    NODES       TIME TIME_LIMIT          SUBMIT_TIME    PARTITION           START_TIME   PRIORITY
+
+
+% scontrol show partition <partition>
+% scontrol show job <jobid>
+% scontrol hold <jobid> 
+% scontrol release <jobid> 
+% scontrol update job <jobid> timelimit= 24:00:00 
+% scontrol update job <jobid> qos=premium
+
+% sinfo -s
+% sinfo -p debug
+
+% sacct -u <username> --starttime=01/12/16T00:01 --endtime=01/15/16T12:00 -o jobid,elapsed,nnodes,start,end,submit
+% sacct -a --starttime=01/12/16T00:01 --endtime=01/15/16T12:00 -o User,JobID,NNodes,State,Start,End,TimeLimit,Elapsed,ExitCode,DerivedExitcode,Comment
+% sacct -u <username> -j <jobid> -o jobid,elapsed,nnodes,nodelist
+
+
