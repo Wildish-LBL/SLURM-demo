@@ -4,6 +4,8 @@
 #SBATCH -t 00:10:00
 #SBATCH -J 05-job-array
 #SBATCH -L SCRATCH
+#SBATCH -o 06-%A-%a-stdout.txt
+#SBATCH -e 06-%A-%a-stderr.txt
 
 #
 # Submit this script with:
