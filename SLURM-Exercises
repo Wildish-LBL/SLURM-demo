@@ -1,3 +1,15 @@
+#
+# This is heavily based on the Cori Phase1 training module, for which the
+# files are available at /project/projectdirs/training/2016/CoriP1/SLURM,
+# but you can just follow this instead.
+#
+# If you're not doing this during the training exercise of October 13th 2016,
+# you will need to remove the '--reservation jgitrain1013' argument from
+# everywhere.
+#
+# See also https://www.nersc.gov/assets/Uploads/CoriP1-20160614-RunningJobs.pdf
+#
+
 % cd $SCRATCH
 
 The hands on will be on Edison since Cori is down for upgrade.
@@ -8,7 +20,7 @@ And CoriP1 has 32 cores per node (16 cores per socket), and 2 hyperthreads per n
 
 To use reservation nodes:
 
-On Thursday 2:30 - 4:30pm
+On Thursday 10/13 2016, from 3:00 - 5:30pm
 #SBATCH --reservation=jgitrain1013
 #SBATCH -p debug
 
@@ -20,14 +32,16 @@ On Wednesday 1-4:30pm, from trainxx accounts only
 #SBATCH -N 1
 #SBATCH -t 30:00
 
-or %salloc -N 1 -p debug --reservation jgitrain1013 -t 30:00
+or
+% salloc -N 1 -p debug --reservation jgitrain1013 -t 30:00
 
 Outside of the above reservation window from trainxx accounts or from your own NERSC accounts
 #SBATCH -p debug
 #SBATCH -N 1
 #SBATCH -t 30:00
 
-or %salloc -N 1 -p debug -t 30:00
+or
+% salloc -N 1 -p debug -t 30:00
 
 ======================================================
 
@@ -40,8 +54,8 @@ or:
 % salloc -N 1 -p debug -t 30:00
 % cat /proc/cpuinfo
 % hwloc-ls
-%
-% # Examine the execution environment, then quit
+
+Examine the execution environment, then quit
 % env | grep SLURM | sort
 % exit
 
@@ -53,7 +67,7 @@ Use "#SBATCH -n" (without #SBATCH -N) to see how many compute nodes you will get
 % salloc -n 48 -p ...
 % echo $SLURM_NODELIST
 Each Edison node has 24 cores, are you getting 2 nodes here?
-(notice with hyperthreading on by default, there are 48 logical cores, so you get 1 node only)
+notice with hyperthreading on by default, there are 48 logical cores, so you get 1 node only
 % exit
 
 ========================================
