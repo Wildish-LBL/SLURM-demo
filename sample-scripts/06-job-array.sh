@@ -9,7 +9,7 @@
 
 #
 # Submit this script with:
-# sbatch --array=1-7:2 -N 1 05-job-array.sh
+# sbatch --array=1-7:2 -N 1 06-job-array.sh
 #
 
 echo "First job in the array has ID=$SLURM_ARRAY_JOB_ID"
