@@ -30,4 +30,5 @@ sbatch $script_name
    * https://www.nersc.gov/assets/Uploads/CoriP1-20160614-RunningJobs.pdf
 
 * This repository of examples:
-   * https://github.com/Wildish-LBL/SLURM-demo/archive/master.zip
+   * https://github.com/Wildish-LBL/SLURM-demo
+   * or download directly: https://github.com/Wildish-LBL/SLURM-demo/archive/master.zip
