@@ -22,26 +22,23 @@ To use reservation nodes:
 
 On Thursday 10/13 2016, from 3:00 - 5:30pm
 #SBATCH --reservation=jgitrain1013
-#SBATCH -p debug
 
-or %salloc -N 1 -p debug --reservation jgitrain1013 -t 30:00
+or %salloc -N 1 --reservation jgitrain1013 -t 30:00
 
 On Wednesday 1-4:30pm, from trainxx accounts only
 #SBATCH --reservation=jgitrain1013
-#SBATCH -p debug
 #SBATCH -N 1
 #SBATCH -t 30:00
 
 or
-% salloc -N 1 -p debug --reservation jgitrain1013 -t 30:00
+% salloc -N 1 --reservation jgitrain1013 -t 30:00
 
 Outside of the above reservation window from trainxx accounts or from your own NERSC accounts
-#SBATCH -p debug
 #SBATCH -N 1
 #SBATCH -t 30:00
 
 or
-% salloc -N 1 -p debug -t 30:00
+% salloc -N 1 -t 30:00
 
 ======================================================
 
@@ -51,7 +48,7 @@ Get on a compute node, find out details about the compute node.
 
 % salloc -N 1 -p regular --reservation jgitrain1013 -t 30:00
 or:
-% salloc -N 1 -p debug -t 30:00
+% salloc -N 1 -t 30:00
 % cat /proc/cpuinfo
 % hwloc-ls
 
@@ -147,4 +144,4 @@ Also do some tests with not fully using all cores on the node
 
 Exercise 5 
 Try everything above with 2 nodes, and run with double the MPI tasks or threads.
-% salloc -N 2 -p debug -t 30:00
+% salloc -N 2 -t 30:00
