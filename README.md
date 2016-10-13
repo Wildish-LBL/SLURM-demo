@@ -32,3 +32,6 @@ sbatch $script_name
 * This repository of examples:
    * https://github.com/Wildish-LBL/SLURM-demo
    * or download directly: https://github.com/Wildish-LBL/SLURM-demo/archive/master.zip
+
+* The official SLURM documentation:
+   * http://slurm.schedmd.com/documentation.html
