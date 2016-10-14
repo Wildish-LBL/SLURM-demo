@@ -7,8 +7,6 @@
 # you will need to remove the '--reservation jgitrain1013' argument from
 # everywhere.
 #
-# See also https://www.nersc.gov/assets/Uploads/CoriP1-20160614-RunningJobs.pdf
-#
 
 % cd $SCRATCH
 
@@ -23,7 +21,7 @@ To use reservation nodes:
 On Thursday 10/13 2016, from 3:00 - 5:30pm
 #SBATCH --reservation=jgitrain1013
 
-or %salloc -N 1 --reservation jgitrain1013 -t 30:00
+or % salloc -N 1 --reservation jgitrain1013 -t 30:00
 
 On Wednesday 1-4:30pm, from trainxx accounts only
 #SBATCH --reservation=jgitrain1013
@@ -68,6 +66,10 @@ notice with hyperthreading on by default, there are 48 logical cores, so you get
 % exit
 
 ========================================
+
+The remaining exercises are for advanced use of MPI. If you're not interested in that you
+can skip them and go straight to the sample-scripts directory and play with the examples
+there.
 
 Exercise 3:
 
